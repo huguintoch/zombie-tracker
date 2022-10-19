@@ -7,3 +7,17 @@ body {
   color: #333;
   background: #f4f4f4;
 }
+
+.content {
+  background-color: rgb(208, 208, 208);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #202020;
+}
+
+.content .title {
+  font-size: 40px;
+  font-weight: 700;
+}

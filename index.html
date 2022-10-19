@@ -1,14 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zombie Tracker</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/main.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zombie Tracker</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/nav-menu.css">
+  <script src="js/main.js"></script>
 </head>
 <body>
-    <h1>Hello World!</h1>
+  <input type="checkbox" id="active">
+  <label for="active" class="menu-btn"></label>
+  <label for="active" class="close"></label>
+  <div class="wrapper">
+    <form>
+      <div class="input-container selectdiv">
+        <label for="type">Type</label>
+        <select id="type">
+          <option value="zombie" selected>Zombie</option>
+          <option value="human" >Shelter</option>
+          <option value="food">Food</option>
+        </select>
+      </div>
+      <div class="latlon-container">
+        <div class="input-container">
+          <label for="lat">Lat</label>
+          <input type="number" id="lat">
+        </div>
+        <div class="input-container">
+          <label for="lon">Lon</label>
+          <input type="number" id="lon">
+        </div>
+      </div>
+      <div class="input-container">
+        <label for="description">Description</label>
+        <textarea id="description" rows="10"></textarea>
+      </div>
+      <div class="submit-container">
+        <button class="submit-btn" type="button" onclick="onSumbit()">Submit</button>
+      </div>
+    </form>
+  </div>
+  <div class="content">
+    <div class="title">
+      Map goes here
+    </div>
+  </div>
 </body>
 </html>

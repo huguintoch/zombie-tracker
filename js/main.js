@@ -14,3 +14,10 @@ if ('serviceWorker' in navigator) {
     console.log('Service worker registration failed: ', err);
   });
 }
+
+function onSumbit() {
+  console.log("[TODO] Validation");
+  console.log("[TODO] Submit to DB");
+  const button = document.getElementById("active");
+  button.checked = false;
+}
