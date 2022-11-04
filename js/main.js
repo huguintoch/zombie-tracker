@@ -15,9 +15,101 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+const AVAILABLE_TYPES = ['zombie', 'human', 'food'];
+
 function onSumbit() {
-  console.log("[TODO] Validation");
-  console.log("[TODO] Submit to DB");
+  const type = document.querySelector('#type');
+  const latitude = document.querySelector('#lat');
+  const longitude = document.querySelector('#lon');
+  const description = document.querySelector('#description');
+
+  if (!isZombieFormValid(type, latitude, longitude, description)) {
+    return;
+  } 
+  
+  const dbForm = {
+    TYPE: type.value,
+    LAT: latitude.value,
+    LON: longitude.value,
+    DESCRIPTION: description.value
+  }
+
+  putZombieFormInDB(dbForm)
+    .then(() => {
+      const button = document.getElementById("active");
+      button.checked = false;
+    })
+    .catch((error) => {
+      console.log("[TODO] Handle error", error);
+    })
+  
   const button = document.getElementById("active");
   button.checked = false;
+}
+
+function isZombieFormValid(type, latitude, longitude, description) {
+  let validForm = true;
+  if (!AVAILABLE_TYPES.includes(type?.value)) {
+    setInputInvalid(type);
+    validForm = false;
+  } else {
+    setInputValid(type);
+  }
+
+  if (!isLatValid(latitude?.value)) {
+    setInputInvalid(latitude);
+    validForm = false;
+  } else {
+    setInputValid(latitude);
+  }
+
+  if (!isLonValid(longitude?.value)) {
+    setInputInvalid(longitude);
+    validForm = false;
+  } else {
+    setInputValid(longitude);
+  }
+
+  if (description?.value == null || description.value.length === 0) {
+    setInputInvalid(description);
+    validForm = false;
+  } else {
+    setInputValid(description);
+  }
+  return validForm;
+}
+
+function setInputInvalid(element) {
+  element.style.border = '3px solid red';
+}
+
+function setInputValid(element) {
+  element.style.border = '';
+}
+
+
+function isLatValid(latitude) {
+  if (latitude == '') {
+    return false;
+  }
+  const lat = Math.abs(latitude);
+  return Number.isFinite(lat) && lat <= 90;
+}
+
+function isLonValid(longitude) {
+  if (longitude == '') {
+    return false;
+  }
+  const lon = Math.abs(longitude);
+  return Number.isFinite(lon) && lon <= 180;
+}
+
+function putZombieFormInDB(form) {
+  // No jala :(
+  const http = context.services.get("myHttp");
+  return http.put({
+    url: "https://mongodb.com.mx",
+    body: { FORM: form },
+    encodeBodyAsJSON: true
+  });
 }
