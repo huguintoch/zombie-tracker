@@ -1,23 +1,30 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const mongo = require('./services/mongo')
+
 const app = express();
 const port = 3000;
 
-// [TODO] Fetch positions from mongodb collection
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Fetch locations from mongodb collection
 app.get('/get-positions', async (req, res) => {
   try {
-    await mongo.client.db("admin").command({ ping: 1 });
-    res.send('Hello World!');
+    const cursor = mongo.client.db("zombie_tracker").collection("location").find();
+    let results = []
+    await cursor.forEach(hit => results.push(hit));
+    res.json(results).status(200);
   } catch(error) {
     console.error(`[app:get-positions] Error: ${error.message}`);
   }
 })
 
-// [TODO] Create position into mongodb collection
+// Create location into mongodb collection
 app.post('/create-position', async (req, res) => {
   try {
-    await mongo.client.db("admin").command({ ping: 1 });
-    res.send('Hello World!');
+    const document = req.body;
+    const result = await mongo.client.db("zombie_tracker").collection("location").insertOne(document);
+    res.json({_id: result.insertedId, ...document}).status(200);
   } catch(error) {
     console.error(`[app:create-position] Error: ${error.message}`);
   }
