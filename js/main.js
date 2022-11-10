@@ -105,9 +105,15 @@ function isLonValid(longitude) {
 }
 
 function postZombieFormInDB(form) {
-  let xhr = new XMLHttpRequest();
-  let url = 'http:/192.168.15.49:3000/create-position';
-  xhr.open("POST", url, true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.send(JSON.stringify(form));
+  let req = new Request('http://localhost:3000/create-position', {
+    method: 'POST',
+    body: JSON.stringify(form),
+    mode: 'cors',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      'Allow-Control-Allow-Origin': '*'
+    })
+  });
+
+  return fetch(req)
 }
