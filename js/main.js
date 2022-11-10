@@ -34,7 +34,7 @@ function onSumbit() {
     DESCRIPTION: description.value
   }
 
-  putZombieFormInDB(dbForm)
+  postZombieFormInDB(dbForm)
     .then(() => {
       const button = document.getElementById("active");
       button.checked = false;
@@ -104,11 +104,10 @@ function isLonValid(longitude) {
   return Number.isFinite(lon) && lon <= 180;
 }
 
-function putZombieFormInDB(form) {
-  // No jala :(
+function postZombieFormInDB(form) {
   const http = context.services.get("myHttp");
-  return http.put({
-    url: "https://mongodb.com.mx",
+  return http.post({
+    url: "http://localhost:3000/create-position",
     body: { FORM: form },
     encodeBodyAsJSON: true
   });
