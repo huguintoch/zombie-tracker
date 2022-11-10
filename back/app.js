@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongo = require('./services/mongo')
 
@@ -8,6 +9,8 @@ const app = express();
 const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors());
 
 // Fetch sightings from mongodb collection
 app.get('/get-positions', async (req, res) => {
