@@ -7,10 +7,10 @@ const port = 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Fetch locations from mongodb collection
+// Fetch sightings from mongodb collection
 app.get('/get-positions', async (req, res) => {
   try {
-    const cursor = mongo.client.db("zombie_tracker").collection("location").find();
+    const cursor = mongo.client.db("zombie_tracker").collection("sighting").find();
     let results = []
     await cursor.forEach(hit => results.push(hit));
     res.json(results).status(200);
@@ -19,11 +19,11 @@ app.get('/get-positions', async (req, res) => {
   }
 })
 
-// Create location into mongodb collection
+// Create sighting into mongodb collection
 app.post('/create-position', async (req, res) => {
   try {
     const document = req.body;
-    const result = await mongo.client.db("zombie_tracker").collection("location").insertOne(document);
+    const result = await mongo.client.db("zombie_tracker").collection("sighting").insertOne(document);
     res.json({_id: result.insertedId, ...document}).status(200);
   } catch(error) {
     console.error(`[app:create-position] Error: ${error.message}`);
