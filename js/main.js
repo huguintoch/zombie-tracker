@@ -105,10 +105,9 @@ function isLonValid(longitude) {
 }
 
 function postZombieFormInDB(form) {
-  const http = context.services.get("myHttp");
-  return http.post({
-    url: "http://localhost:3000/create-position",
-    body: { FORM: form },
-    encodeBodyAsJSON: true
-  });
+  let xhr = new XMLHttpRequest();
+  let url = 'http:/192.168.15.49:3000/create-position';
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify(form));
 }
