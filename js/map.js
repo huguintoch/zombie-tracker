@@ -9,18 +9,19 @@ function fetchSightings() {
         });
 }
 
-function drawSightingsOnMap(sightings) {
+function drawSightingsOnMap(sightings, map) {
     sightings.forEach(function (sighting) {
         var marker = L.marker([sighting.latitude, sighting.longitude]).addTo(map);
         marker.bindPopup(sighting.description);
     });
 }
 
-window.addEventListener('DOMContentLoaded', function() {    
+window.addEventListener('DOMContentLoaded', function() { 
+    var map = L.map('map');   
     L.tileLayer(`http://${location.hostname}:8080/tile/{z}/{x}/{y}.png`, {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
     fetchSightings();
     var sightings = JSON.parse(localStorage.getItem('sightings'));
-    drawSightingsOnMap(sightings);
+    drawSightingsOnMap(sightings, map);
 });
