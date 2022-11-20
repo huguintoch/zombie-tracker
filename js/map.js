@@ -10,8 +10,15 @@ function fetchSightings() {
 }
 
 function drawSightingsOnMap(sightings, map) {
+    var colorTypeDict = {
+        'zombie': 'red',
+        'human': 'blue',
+        'food': 'green'
+    };
+
     sightings.forEach(function (sighting) {
-        var marker = L.marker([sighting.LAT, sighting.LON]).addTo(map);
+        var markerColor = colorTypeDict[sighting.TYPE];
+        var marker = L.circleMarker([sighting.LAT, sighting.LON], {radius: 10, fillColor: markerColor, fill: true, stroke: false}).addTo(map);
         marker.bindPopup(sighting.DESCRIPTION);
     });
 }
