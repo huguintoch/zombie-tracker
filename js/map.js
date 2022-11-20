@@ -1,12 +1,26 @@
-window.addEventListener('DOMContentLoaded', function() {
-    var coords = [20.574854, -103.440244]
-    var map = L.map('map').setView(coords, 2);
-    
+function fetchSightings() {
+    var url = `http://${location.hostname}:3000/get-positions`;
+    fetch(url)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            localStorage.setItem('sightings', JSON.stringify(data));
+        });
+}
+
+function drawSightingsOnMap(sightings) {
+    sightings.forEach(function (sighting) {
+        var marker = L.marker([sighting.latitude, sighting.longitude]).addTo(map);
+        marker.bindPopup(sighting.description);
+    });
+}
+
+window.addEventListener('DOMContentLoaded', function() {    
     L.tileLayer(`http://${location.hostname}:8080/tile/{z}/{x}/{y}.png`, {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-    
-    L.marker(coords).addTo(map)
-        .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-        .openPopup();
+    fetchSightings();
+    var sightings = JSON.parse(localStorage.getItem('sightings'));
+    drawSightingsOnMap(sightings);
 });
