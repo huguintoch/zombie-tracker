@@ -29,8 +29,8 @@ function onSumbit() {
   
   const dbForm = {
     TYPE: type.value,
-    LAT: latitude.value,
-    LON: longitude.value,
+    LAT: Number(latitude.value),
+    LON: Number(longitude.value),
     DESCRIPTION: description.value
   }
 
