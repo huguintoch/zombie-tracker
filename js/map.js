@@ -1,3 +1,5 @@
+var map;
+
 async function fetchSightings() {
     var url = `http://${location.hostname}:3000/get-positions`;
     return fetch(url)
@@ -9,7 +11,9 @@ async function fetchSightings() {
         });
 }
 
-function drawSightingsOnMap(sightings, map) {
+function drawSightingsOnMap(sightings) {
+    if(!map) return;
+    
     var colorTypeDict = {
         'zombie': 'red',
         'human': 'blue',
@@ -33,7 +37,7 @@ function drawSightingsOnMap(sightings, map) {
 }
 
 window.addEventListener('DOMContentLoaded', async function () {
-    var map = L.map('map').setView([20.574854, -103.440244], 10);
+    map = L.map('map').setView([20.574854, -103.440244], 10);
 
     L.tileLayer(`http://${location.hostname}:8080/tile/{z}/{x}/{y}.png`, {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -44,11 +48,4 @@ window.addEventListener('DOMContentLoaded', async function () {
         drawSightingsOnMap(sightings, map);
     });
 
-});
-
-window.addEventListener('storage', () => {
-  // When local storage changes, dump the list to
-  // the console.
-  console.log("Storage update");
-  //[TODO] update map
 });
