@@ -20,7 +20,9 @@
             LON: lon,
             DESCRIPTION: description
         };
-        
+        let sightings = JSON.parse(localStorage.getItem('new-sightings') || '[]');
+        sightings.push(data);
+        localStorage.setItem('new-sightings', JSON.stringify(sightings));
     }
   </script>
 </head>
@@ -51,7 +53,7 @@
         <textarea id="description" rows="10"></textarea>
       </div>
       <div class="submit-container">
-        <button class="submit-btn" type="button" onclick="onSumbit()">Submit</button>
+        <button class="submit-btn" type="button" onclick="onSubmit()">Submit</button>
       </div>
     </form>
   </div>

@@ -11,9 +11,17 @@ async function fetchSightings() {
         });
 }
 
+async function saveOfflineSightings() {
+    var offlineSightings = JSON.parse(localStorage.getItem('new-sightings') || '[]');
+    offlineSightings.forEach(function (sighting) {
+        postZombieFormInDB(sighting);
+    });
+    localStorage.removeItem('new-sightings');
+}
+
 function drawSightingsOnMap(sightings) {
     if(!map) return;
-    
+
     var colorTypeDict = {
         'zombie': 'red',
         'human': 'blue',
