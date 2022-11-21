@@ -41,7 +41,7 @@ function onSumbit() {
     })
     .catch(() => {
       let newSightings = JSON.parse(localStorage.getItem('new-sightings') || '[]');
-      newSightings.push(data);
+      newSightings.push(dbForm);
       localStorage.setItem('new-sightings', JSON.stringify(newSightings));
     })
 
