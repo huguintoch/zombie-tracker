@@ -39,8 +39,10 @@ function onSumbit() {
       const button = document.getElementById("active");
       button.checked = false;
     })
-    .catch((error) => {
-      console.log("[TODO] Handle error", error);
+    .catch(() => {
+      let newSightings = JSON.parse(localStorage.getItem('new-sightings') || '[]');
+      newSightings.push(data);
+      localStorage.setItem('new-sightings', JSON.stringify(newSightings));
     })
 
   const button = document.getElementById("active");

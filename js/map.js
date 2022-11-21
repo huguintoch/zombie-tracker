@@ -13,10 +13,10 @@ async function fetchSightings() {
 
 async function saveOfflineSightings() {
     var offlineSightings = JSON.parse(localStorage.getItem('new-sightings') || '[]');
+    localStorage.removeItem('new-sightings');
     offlineSightings.forEach(function (sighting) {
         postZombieFormInDB(sighting);
     });
-    localStorage.removeItem('new-sightings');
 }
 
 function drawSightingsOnMap(sightings) {
