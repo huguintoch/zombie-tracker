@@ -3,6 +3,18 @@
     "name": "Zombie Tracker",
     "description": "App used to track zombies, food and shelter",
     "start_url": "/",
-    "id": "com.zombietracker",
-    "display": "fullscreen"
+    "id": "/",
+    "display": "fullscreen",
+    "icons": [
+        {
+            "src": "/img/icon192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/img/icon512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
 }
