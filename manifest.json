@@ -1,0 +1,8 @@
+{
+    "short_name": "ZT",
+    "name": "Zombie Tracker",
+    "description": "App used to track zombies, food and shelter",
+    "start_url": "/",
+    "id": "com.zombietracker",
+    "display": "fullscreen"
+}

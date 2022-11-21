@@ -1,4 +1,4 @@
-const filesToCache = ['/js/leaflet.js', '/js/main.js', '/js/map.js', '/css/leaflet.css', '/css/nav-menu.css', '/css/style.css'];
+const filesToCache = ['/index.html', '/js/leaflet.js', '/js/main.js', '/js/map.js', '/css/leaflet.css', '/css/nav-menu.css', '/css/style.css'];
 
 // This one stores an offline webpage in cache
 self.addEventListener('install', (e) => {
@@ -27,8 +27,8 @@ self.addEventListener('fetch', function (event) {
         });
       })
     );
-  } else {
-    let cachedFileName = 'index.html';
+  } else if (!event.request.url.includes(':3000/')) {
+    let cachedFileName = '/index.html';
     filesToCache.some((file) => {
       if (event.request.url.includes(file)) {
         cachedFileName = file;
