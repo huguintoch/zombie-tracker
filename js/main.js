@@ -40,6 +40,7 @@ function onSumbit() {
       button.checked = false;
     })
     .catch(() => {
+      console.log('Error while posting form');
       let newSightings = JSON.parse(localStorage.getItem('new-sightings') || '[]');
       newSightings.push(dbForm);
       localStorage.setItem('new-sightings', JSON.stringify(newSightings));
