@@ -51,9 +51,7 @@ window.addEventListener('DOMContentLoaded', async function () {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    fetchSightings().then(function () {
-        var sightings = JSON.parse(localStorage.getItem('sightings'));
-        drawSightingsOnMap(sightings, map);
-    });
-
+    await fetchSightings();
+    var sightings = JSON.parse(localStorage.getItem('sightings') || '[]');
+    drawSightingsOnMap(sightings, map);
 });
