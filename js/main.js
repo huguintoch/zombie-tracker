@@ -34,7 +34,7 @@ function onSumbit() {
     DESCRIPTION: description.value
   }
 
-  postZombieFormInDB(dbForm)
+  postZombieFormInDB(dbForm, true)
     .then(() => {
       const button = document.getElementById("active");
       button.checked = false;
@@ -107,7 +107,7 @@ function isLonValid(longitude) {
   return Number.isFinite(lon) && lon <= 180;
 }
 
-function postZombieFormInDB(form) {
+function postZombieFormInDB(form, save) {
   let req = new Request(`http://${location.hostname}:3000/create-position`, {
     method: 'POST',
     body: JSON.stringify(form),
@@ -117,7 +117,7 @@ function postZombieFormInDB(form) {
       'Allow-Control-Allow-Origin': '*'
     })
   });
-  saveEntryInLocalStorage(form);
+  if (save) saveEntryInLocalStorage(form);
   return fetch(req)
 }
 
