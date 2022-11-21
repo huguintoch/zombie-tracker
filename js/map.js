@@ -19,7 +19,7 @@ async function saveOfflineSightings() {
 }
 
 function drawSightingsOnMap(sightings) {
-    if(!map) return;
+    if (!map) return;
 
     var colorTypeDict = {
         'zombie': 'red',
@@ -30,13 +30,13 @@ function drawSightingsOnMap(sightings) {
     sightings.forEach(function (sighting) {
         var markerColor = colorTypeDict[sighting.TYPE];
         var marker = L.circleMarker(
-            [sighting.LAT, sighting.LON], 
-            { 
-                radius: 5, 
+            [sighting.LAT, sighting.LON],
+            {
+                radius: 5,
                 fillColor: markerColor,
-                fillOpacity: 1, 
-                fill: true, 
-                stroke: false 
+                fillOpacity: 1,
+                fill: true,
+                stroke: false
             }
         ).addTo(map);
         marker.bindPopup(sighting.DESCRIPTION);
@@ -54,9 +54,17 @@ window.addEventListener('DOMContentLoaded', async function () {
         await saveOfflineSightings();
         await fetchSightings();
     } catch (error) {
-        console.log(error);   
+        console.log(error);
     } finally {
         var sightings = JSON.parse(localStorage.getItem('sightings') || '[]');
         drawSightingsOnMap(sightings);
     }
+
+    /** Enable click with enter on tabbable elements */
+    document.querySelectorAll('.menu-btn')
+        .forEach(el => el.addEventListener('keyup', e => {
+            if (e.key === 'Enter') {
+                e.target.click();
+            }
+        }));
 });
