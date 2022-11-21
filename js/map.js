@@ -44,10 +44,11 @@ window.addEventListener('DOMContentLoaded', async function () {
         drawSightingsOnMap(sightings, map);
     });
 
-    window.addEventListener('storage', () => {
-      // When local storage changes, dump the list to
-      // the console.
-      console.log("Storage update");
-      //[TODO] update map
-    });
+});
+
+window.addEventListener('storage', () => {
+  // When local storage changes, dump the list to
+  // the console.
+  console.log("Storage update");
+  //[TODO] update map
 });
