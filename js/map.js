@@ -52,6 +52,7 @@ window.addEventListener('DOMContentLoaded', async function () {
     }).addTo(map);
 
     try {
+        await saveOfflineSightings();
         await fetchSightings();
     } catch (error) {
         console.log(error);   
