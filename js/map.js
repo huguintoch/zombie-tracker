@@ -13,7 +13,7 @@ async function fetchSightings() {
 
 async function saveOfflineSightings() {
     var offlineSightings = JSON.parse(localStorage.getItem('new-sightings') || '[]');
-    Promise.all(offlineSightings.map((sighting) => postZombieFormInDB(sighting, false))).then(() => {
+    return Promise.all(offlineSightings.map((sighting) => postZombieFormInDB(sighting, false))).then(() => {
         localStorage.removeItem('new-sightings');
     });
 }
