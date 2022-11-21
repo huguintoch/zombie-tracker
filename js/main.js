@@ -114,6 +114,12 @@ function postZombieFormInDB(form) {
       'Allow-Control-Allow-Origin': '*'
     })
   });
-
+  saveEntryInLocalStorage(form);
   return fetch(req)
+}
+
+function saveEntryInLocalStorage(entry) {
+  const entries = JSON.parse(localStorage.getItem('sightings') || '[]');
+  entries.push(entry);
+  localStorage.setItem('sightings', JSON.stringify(entries));
 }

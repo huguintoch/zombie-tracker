@@ -1,4 +1,4 @@
-function fetchSightings() {
+async function fetchSightings() {
     var url = `http://${location.hostname}:3000/get-positions`;
     return fetch(url)
         .then(function (response) {
@@ -42,5 +42,12 @@ window.addEventListener('DOMContentLoaded', async function () {
     fetchSightings().then(function () {
         var sightings = JSON.parse(localStorage.getItem('sightings'));
         drawSightingsOnMap(sightings, map);
+    });
+
+    window.addEventListener('storage', () => {
+      // When local storage changes, dump the list to
+      // the console.
+      console.log("Storage update");
+      //[TODO] update map
     });
 });
