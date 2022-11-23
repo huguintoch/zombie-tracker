@@ -2,8 +2,8 @@ var map;
 
 async function fetchSightings() {
     console.log('Hostname: ', location.hostname);
-    let finalHost = location.hostname.includes('ngrok') ? 'api-zombietracker.ngrok.io' : `${location.hostname}:3000`;
-    var url = `http://${finalHost}/get-positions`;
+    let finalHost = location.hostname.includes('ngrok') ? 'https://api-zombietracker.ngrok.io' : `http://${location.hostname}:3000`;
+    var url = `${finalHost}/get-positions`;
     return fetch(url)
         .then(function (response) {
             return response.json();
