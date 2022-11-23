@@ -109,7 +109,8 @@ function isLonValid(longitude) {
 }
 
 function postZombieFormInDB(form, save) {
-  let req = new Request(`http://${location.hostname}:3000/create-position`, {
+  let finalHost = location.hostname.includes('ngrok') ? 'api-zombietracker.ngrok.io' : `${location.hostname}:3000`;
+  let req = new Request(`http://${finalHost}/create-position`, {
     method: 'POST',
     body: JSON.stringify(form),
     mode: 'cors',
