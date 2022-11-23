@@ -1,7 +1,7 @@
 var map;
 
 async function fetchSightings() {
-    var url = `http://${location.hostname}:3000/get-positions`;
+    var url = `http://localhost:3000/get-positions`;
     return fetch(url)
         .then(function (response) {
             return response.json();
@@ -70,7 +70,7 @@ window.addEventListener('DOMContentLoaded', async function () {
 
     map = L.map('map').setView(currentCoords, 10);
 
-    L.tileLayer(`http://${location.hostname}:8080/tile/{z}/{x}/{y}.png`, {
+    L.tileLayer(`http://localhost:8080/tile/{z}/{x}/{y}.png`, {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 

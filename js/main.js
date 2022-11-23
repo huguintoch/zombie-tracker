@@ -109,7 +109,7 @@ function isLonValid(longitude) {
 }
 
 function postZombieFormInDB(form, save) {
-  let req = new Request(`http://${location.hostname}:3000/create-position`, {
+  let req = new Request(`http://localhost:3000/create-position`, {
     method: 'POST',
     body: JSON.stringify(form),
     mode: 'cors',
