@@ -50,6 +50,15 @@ window.addEventListener('DOMContentLoaded', async function () {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
+    // Get lat and lon from click on map
+    map.on('click', function (e) {
+        var lat = e.latlng.lat;
+        var lon = e.latlng.lng;
+        document.getElementById('lat').value = lat;
+        document.getElementById('lon').value = lon;
+        console.log(lat, lon);
+    });
+
     try {
         await saveOfflineSightings();
         await fetchSightings();
