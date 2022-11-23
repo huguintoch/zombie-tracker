@@ -43,8 +43,32 @@ function drawSightingsOnMap(sightings) {
     });
 }
 
+async function getCurrentPosition() {
+    return new Promise(function (resolve, reject) {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+}
+
+function setFormLocation(lat, lon) {
+    document.getElementById('lat').value = lat;
+    document.getElementById('lon').value = lon;
+}
+
 window.addEventListener('DOMContentLoaded', async function () {
-    map = L.map('map').setView([20.574854, -103.440244], 10);
+    // Get current position
+    var currentCoords = [20.574854, -103.440244];
+    try {        
+        var position = await getCurrentPosition();
+        var browserLat = position.coords.latitude;
+        var browserLon = position.coords.longitude;
+        currentCoords = [browserLat, browserLon];
+        setFormLocation(browserLat, browserLon);
+        console.log('Browser location: ', browserLat, browserLon);
+    } catch (error) {
+        console.log('Error getting current position', error);
+    }
+
+    map = L.map('map').setView(currentCoords, 10);
 
     L.tileLayer(`http://${location.hostname}:8080/tile/{z}/{x}/{y}.png`, {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -52,12 +76,27 @@ window.addEventListener('DOMContentLoaded', async function () {
 
     // Get lat and lon from click on map
     map.on('click', function (e) {
-        var lat = e.latlng.lat;
-        var lon = e.latlng.lng;
-        document.getElementById('lat').value = lat;
-        document.getElementById('lon').value = lon;
-        console.log(lat, lon);
+        var mapLat = e.latlng.lat;
+        var mapLon = e.latlng.lng;
+        setFormLocation(mapLat, mapLon);
+        console.log('Map clicked @: ', mapLat, mapLon);
     });
+
+    // Add legend to map
+    var legend = L.control({ position: 'bottomright' });
+    legend.onAdd = function (map) {
+        var div = L.DomUtil.create('div', 'info legend');
+        div.style.backgroundColor = 'white';
+        div.style.padding = '5px';
+        div.style.border = '2px solid black';
+        div.innerHTML += '<b>Legend</b><br>';
+        div.innerHTML += '<span style="color: red;">Zombie </span> | ';
+        div.innerHTML += '<span style="color: blue;">Shelter </span> | ';
+        div.innerHTML += '<span style="color: green;">Food </span><br><br>';
+        div.innerHTML += '<b>Click on map to store coordinates</b>';
+        return div;
+    };
+    legend.addTo(map);
 
     try {
         await saveOfflineSightings();
